@@ -27,7 +27,7 @@ public class HelloController {
     @GetMapping("/stats")
     public Stats statistic(@RequestParam String numbers) {
         String[] stringArray = numbers.split(",");
-        int min = 999999999;
+        int min = 99999999;
         int max = 0;
         float avg = 0;
         for(int i =0; i < stringArray.length; i++) {
