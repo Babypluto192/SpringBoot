@@ -27,28 +27,28 @@ public class HelloController {
     @GetMapping("/stats")
     public Stats statistic(@RequestParam String numbers) {
         String[] stringArray = numbers.split(",");
-        int min = 99999999;
-        int max = 0;
-        float avg = 0;
+        float average = 0;
+        int minimum = Integer.parseInt(stringArray[0]);
+        int maximum = Integer.parseInt(stringArray[0]);
         for(int i =0; i < stringArray.length; i++) {
             var currentNumber = Integer.parseInt(stringArray[i]);
-            if (currentNumber < min) {
-                min = currentNumber;
+            if (currentNumber < minimum) {
+                minimum = currentNumber;
             }
-            if(currentNumber > max) {
-                max = currentNumber;
+            if(currentNumber > maximum) {
+                maximum = currentNumber;
             }
 
-            avg += currentNumber;
+            average += currentNumber;
         }
-        avg = avg / stringArray.length;
+        average = average / stringArray.length;
 
-        return new Stats(400, min,max,avg);
+        return new Stats(500, minimum,maximum,average);
     }
 
     public record Greeting(String message, String owner, LocalDateTime timestamp) { }
 
     public record Info(String owner, String javaVersion, int cpuCores) { }
 
-    public record Stats(int status, int min, int max, float avg) { }
+    public record Stats(int status, int minimum, int maximum, float average) { }
 }
