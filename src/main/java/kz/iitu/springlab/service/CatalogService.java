@@ -1,6 +1,8 @@
 package kz.iitu.springlab.service;
 
 import kz.iitu.springlab.audit.Audited;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +13,9 @@ import java.util.stream.IntStream;
 @Service
 public class CatalogService {
 
+    @Autowired
+    @Lazy
+    private CatalogService self;
 
     public String FindById(long id) {
         sleep(50);
@@ -23,6 +28,7 @@ public class CatalogService {
         return IntStream.rangeClosed(1, limit).mapToObj(i -> "Item no " + i).toList();
     }
 
+    @Audited(action = "CATALOG_REMOVE")
     public String remove(long id) {
         if ( id <= 0) {
             throw new IllegalArgumentException("Invalid Id " + id);
@@ -38,7 +44,8 @@ public class CatalogService {
 
     @Audited(action = "CATALOG_REMOVE")
     public String removeTwice(long id) {
-        String first = remove(id);
-        String second = remove(id + 1);
-        return first + "; " + second; }
+        String first = self.remove(id);
+        String second = self.remove(id+1);
+        return first + "; " + second;
+    }
 }

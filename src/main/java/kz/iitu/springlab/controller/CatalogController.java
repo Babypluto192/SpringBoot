@@ -38,7 +38,7 @@ public class CatalogController {
     }
 
 
-    @DeleteMapping("/remove-twice/{id}")
+    @GetMapping("/remove-twice/{id}")
     public String removeItem(@PathVariable String id) {
         long serviceId = Integer.parseInt(id);
         return catalogService.removeTwice(serviceId);
